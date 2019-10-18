@@ -67,6 +67,19 @@ class _TicTacToePageState extends State<TicTacToePage> {
     }
   }
 
+  Widget createExpandedCell(int row, int col) {
+    return Expanded(
+      child: OneBox(
+        buttonChild: createIconFromToken(board[row][col]),
+        backgroundColor: createColorFromBool(colorBoard[row][col]),
+        onPressed: () {
+          updateBox(row, col);
+          setState(() {});
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,120 +124,9 @@ class _TicTacToePageState extends State<TicTacToePage> {
                 margin: EdgeInsets.all(6),
                 child: Column(
                   children: <Widget>[
-                    Expanded(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Expanded(
-                            child: OneBox(
-                              buttonChild: createIconFromToken(board[0][0]),
-                              backgroundColor: createColorFromBool(colorBoard[0][0]),
-                              onPressed: () {
-                                updateBox(0, 0);
-                                setState(() {});
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: OneBox(
-                              buttonChild: createIconFromToken(board[0][1]),
-                              backgroundColor: createColorFromBool(colorBoard[0][1]),
-                              onPressed: () {
-                                updateBox(0, 1);
-                                setState(() {});
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: OneBox(
-                              buttonChild: createIconFromToken(board[0][2]),
-                              backgroundColor: createColorFromBool(colorBoard[0][2]),
-                              onPressed: () {
-                                updateBox(0, 2);
-                                setState(() {});
-                              },
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Expanded(
-                            child: OneBox(
-                              buttonChild: createIconFromToken(board[1][0]),
-                              backgroundColor: createColorFromBool(colorBoard[1][0]),
-                              onPressed: () {
-                                updateBox(1, 0);
-                                setState(() {});
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: OneBox(
-                              buttonChild: createIconFromToken(board[1][1]),
-                              backgroundColor: createColorFromBool(colorBoard[1][1]),
-                              onPressed: () {
-                                updateBox(1, 1);
-                                setState(() {});
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: OneBox(
-                              buttonChild: createIconFromToken(board[1][2]),
-                              backgroundColor: createColorFromBool(colorBoard[1][2]),
-                              onPressed: () {
-                                updateBox(1, 2);
-                                setState(() {});
-                              },
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Expanded(
-                            child: OneBox(
-                              buttonChild: createIconFromToken(board[2][0]),
-                              backgroundColor: createColorFromBool(colorBoard[2][0]),
-                              onPressed: () {
-                                updateBox(2, 0);
-                                setState(() {});
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: OneBox(
-                              buttonChild: createIconFromToken(board[2][1]),
-                              backgroundColor: createColorFromBool(colorBoard[2][1]),
-                              onPressed: () {
-                                updateBox(2, 1);
-                                setState(() {});
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: OneBox(
-                              buttonChild: createIconFromToken(board[2][2]),
-                              backgroundColor: createColorFromBool(colorBoard[2][0]),
-                              onPressed: () {
-                                updateBox(2, 2);
-                                setState(() {});
-                              },
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                    createExandedRow(0),
+                    createExandedRow(1),
+                    createExandedRow(2),
                   ],
                 ),
               ),
@@ -275,6 +177,21 @@ class _TicTacToePageState extends State<TicTacToePage> {
       }
       winnerPopup();
     }
+  }
+
+  Widget createExandedRow(int row) {
+    return Expanded(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          createExpandedCell(row, 0),
+          createExpandedCell(row, 1),
+          createExpandedCell(row, 2),
+        ],
+      ),
+    );
+
   }
 }
 
