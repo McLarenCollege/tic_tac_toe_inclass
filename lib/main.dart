@@ -57,6 +57,16 @@ class _TicTacToePageState extends State<TicTacToePage> {
 
   }
 
+
+  Color createColorFromBool(bool isHighlighted) {
+    if (isHighlighted) {
+      return Colors.yellow.withOpacity(0.2);
+    }
+    else {
+      return Colors.white24;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,7 +119,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
                           Expanded(
                             child: OneBox(
                               buttonChild: createIconFromToken(board[0][0]),
-                              isHighlighted: colorBoard[0][0],
+                              backgroundColor: createColorFromBool(colorBoard[0][0]),
                               onPressed: () {
                                 updateBox(0, 0);
                                 setState(() {});
@@ -119,7 +129,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
                           Expanded(
                             child: OneBox(
                               buttonChild: createIconFromToken(board[0][1]),
-                              isHighlighted: colorBoard[0][1],
+                              backgroundColor: createColorFromBool(colorBoard[0][1]),
                               onPressed: () {
                                 updateBox(0, 1);
                                 setState(() {});
@@ -129,7 +139,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
                           Expanded(
                             child: OneBox(
                               buttonChild: createIconFromToken(board[0][2]),
-                              isHighlighted: colorBoard[0][2],
+                              backgroundColor: createColorFromBool(colorBoard[0][2]),
                               onPressed: () {
                                 updateBox(0, 2);
                                 setState(() {});
@@ -147,7 +157,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
                           Expanded(
                             child: OneBox(
                               buttonChild: createIconFromToken(board[1][0]),
-                              isHighlighted: colorBoard[1][0],
+                              backgroundColor: createColorFromBool(colorBoard[1][0]),
                               onPressed: () {
                                 updateBox(1, 0);
                                 setState(() {});
@@ -157,7 +167,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
                           Expanded(
                             child: OneBox(
                               buttonChild: createIconFromToken(board[1][1]),
-                              isHighlighted: colorBoard[1][1],
+                              backgroundColor: createColorFromBool(colorBoard[1][1]),
                               onPressed: () {
                                 updateBox(1, 1);
                                 setState(() {});
@@ -167,7 +177,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
                           Expanded(
                             child: OneBox(
                               buttonChild: createIconFromToken(board[1][2]),
-                              isHighlighted: colorBoard[1][2],
+                              backgroundColor: createColorFromBool(colorBoard[1][2]),
                               onPressed: () {
                                 updateBox(1, 2);
                                 setState(() {});
@@ -185,7 +195,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
                           Expanded(
                             child: OneBox(
                               buttonChild: createIconFromToken(board[2][0]),
-                              isHighlighted: colorBoard[2][0],
+                              backgroundColor: createColorFromBool(colorBoard[2][0]),
                               onPressed: () {
                                 updateBox(2, 0);
                                 setState(() {});
@@ -195,7 +205,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
                           Expanded(
                             child: OneBox(
                               buttonChild: createIconFromToken(board[2][1]),
-                              isHighlighted: colorBoard[2][1],
+                              backgroundColor: createColorFromBool(colorBoard[2][1]),
                               onPressed: () {
                                 updateBox(2, 1);
                                 setState(() {});
@@ -205,7 +215,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
                           Expanded(
                             child: OneBox(
                               buttonChild: createIconFromToken(board[2][2]),
-                              isHighlighted: colorBoard[2][2],
+                              backgroundColor: createColorFromBool(colorBoard[2][0]),
                               onPressed: () {
                                 updateBox(2, 2);
                                 setState(() {});
@@ -271,11 +281,11 @@ class _TicTacToePageState extends State<TicTacToePage> {
 class OneBox extends StatelessWidget {
   final Widget buttonChild;
   final Function onPressed;
-  final bool isHighlighted;
+  final Color backgroundColor;
   OneBox(
       {this.buttonChild = const Text(''),
       this.onPressed,
-      this.isHighlighted});
+      this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
@@ -290,7 +300,7 @@ class OneBox extends StatelessWidget {
       ),
       margin: EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: isHighlighted ? Colors.yellow.withOpacity(0.2) : Colors.white24,
+        color: backgroundColor,
         borderRadius: BorderRadius.all(
           Radius.circular(14),
         ),
