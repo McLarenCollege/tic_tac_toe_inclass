@@ -7,13 +7,13 @@ void main() {
 
 
   test("test fullBoard", () {
-    List<List<Icon>> board = [
+    List<List<Token>> board = [
       [null, null, null],
       [null, null, null],
       [null, null, null]
     ];
 
-    board[2][2] = xIcon;
+    board[2][2] = Token.x;
 
     expect(fullBoard(board), false);
 
