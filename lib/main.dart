@@ -101,13 +101,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
               flex: 1,
               child: Container(
                 alignment: Alignment.topCenter,
-                child: Text(
-                  getCurrentStatus(),
-                  style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.white.withOpacity(0.6),
-                      fontFamily: 'Quicksand'),
-                ),
+                child: createStatusWidget(),
               ),
             ),
             Expanded(
@@ -160,6 +154,22 @@ class _TicTacToePageState extends State<TicTacToePage> {
     );
   }
 
+  Widget createStatusWidget() {
+    Text text = Text(
+                getCurrentStatus(),
+                style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.white.withOpacity(0.6),
+                    fontFamily: 'Quicksand'),
+              );
+    if (winnerCheck(board)) {
+      return BouncingText(text);
+    }
+    else {
+      return text;
+    }
+  }
+
   void updateBox(int r, int c) {
     if (legitMove(board[r][c])) {
       board[r][c] = currentPlayer;
@@ -182,6 +192,50 @@ class _TicTacToePageState extends State<TicTacToePage> {
 
   }
 }
+
+class BouncingText extends StatefulWidget {
+
+  final Text text;
+
+  BouncingText(this.text);
+
+  @override
+  _BouncingTextState createState() => _BouncingTextState();
+}
+
+class _BouncingTextState extends State<BouncingText> with SingleTickerProviderStateMixin {
+
+  AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _controller.reverse();
+      }
+      else if (status == AnimationStatus.dismissed){
+        _controller.forward();
+      }
+    });
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ScaleTransition(child: widget.text, alignment: Alignment.topCenter,
+      scale: Tween(begin: 1.0, end: 1.4).animate(CurvedAnimation(parent: _controller, curve:Curves.easeInOut)),);
+  }
+}
+
 
 class OneBox extends StatelessWidget {
   final Widget buttonChild;
