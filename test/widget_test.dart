@@ -3,21 +3,57 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:tic_tac_toe_starter/gamelogic.dart';
 
 void main() {
-  List<String> names = ['Hello', null, 'Goodbye'];
+
+
 
 
   test("test fullBoard", () {
-    List<List<Token>> board = [
-      [null, null, null],
-      [null, null, null],
-      [null, null, null]
-    ];
 
     board[2][2] = Token.x;
 
     expect(fullBoard(board), false);
 
   });
+
+
+  test('Test changePlayerIfGameIsNotOver is correct if empty', (){
+
+    expect(currentPlayer, Token.x);
+
+    changePlayerIfGameIsNotOver();
+
+    expect(currentPlayer, Token.o);
+
+  });
+
+
+  test('Test changePlayerIfGameIsNotOver does nothing if board is draw', ()
+  {
+
+    currentPlayer = Token.x;
+    board = [
+      [Token.x, Token.x, Token.o],
+      [Token.o, Token.x, Token.x],
+      [Token.x, Token.o, Token.o]
+    ];
+    changePlayerIfGameIsNotOver();
+    expect(currentPlayer, Token.x);
+  });
+
+
+  test('Test changePlayerIfGameIsNotOver does nothing if o is winner', ()
+  {
+    currentPlayer = Token.x;
+    board = [
+      [Token.x, Token.x, Token.o],
+      [Token.o, Token.x, Token.x],
+      [Token.x, Token.o, Token.x]
+    ];
+    changePlayerIfGameIsNotOver();
+    expect(currentPlayer, Token.x);
+  });
+
+
 
 }
 

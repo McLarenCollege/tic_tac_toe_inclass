@@ -26,7 +26,7 @@ bool legitMove(Token t) {
 
 
 //default parameters
-String currentPlayer = 'Player X Move'; //X will always be player 1
+Token currentPlayer = Token.x; //X will always be player 1
 //Icon xIcon = Icon(
 //  Icons.close,
 //  size: 90,
@@ -40,11 +40,11 @@ String currentPlayer = 'Player X Move'; //X will always be player 1
 //Icon playerIcon;
 
 //function to change player based on currentPlayer value which is a string,
-changePlayer(String x) {
-  if (x == 'Player X Move') {
-    currentPlayer = 'Player O Move';
-  } else if (x == 'Player O Move') {
-    currentPlayer = 'Player X Move';
+changePlayer(Token player) {
+  if (player == Token.x) {
+    currentPlayer = Token.o;
+  } else if (player == Token.o) {
+    currentPlayer = Token.x;
   }
 }
 
@@ -61,7 +61,7 @@ void gameReset() {
     [false, false, false],
     [false, false, false]
   ];
-  currentPlayer = 'Player X Move';
+  currentPlayer = Token.x;
 }
 
 bool fullBoard(List<List<Token>> board) {
@@ -128,4 +128,17 @@ bool winnerCheck(List<List<Token>> board) {
   } else {
     return false;
   }
+}
+
+
+void changePlayerIfGameIsNotOver() {
+//    if (winnerCheck(board) || fullBoard(board)) {
+//      return;
+//    }
+//    changePlayer(currentPlayer);
+
+  if (!winnerCheck(board) && !fullBoard(board)) {
+    changePlayer(currentPlayer);
+  }
+
 }

@@ -25,15 +25,7 @@ class TicTacToePage extends StatefulWidget {
 }
 
 class _TicTacToePageState extends State<TicTacToePage> {
-  void winnerPopup() {
-    if (winnerCheck(board)) {
-      currentPlayer = "${currentPlayer.substring(7, 9)} Won";
-    } else if (fullBoard(board)) {
-      currentPlayer = "draw";
-    } else {
-      changePlayer(currentPlayer);
-    }
-  }
+
 
 
   Widget createIconFromToken(Token t) {
@@ -60,7 +52,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
 
   Color createColorFromBool(bool isHighlighted) {
     if (isHighlighted) {
-      return Colors.yellow.withOpacity(0.2);
+      return Colors.yellow.withOpacity(0.6);
     }
     else {
       return Colors.white24;
@@ -170,12 +162,8 @@ class _TicTacToePageState extends State<TicTacToePage> {
 
   void updateBox(int r, int c) {
     if (legitMove(board[r][c])) {
-      if (currentPlayer == 'Player X Move') {
-        board[r][c] = Token.x;
-      } else {
-        board[r][c] = Token.o;
-      }
-      winnerPopup();
+      board[r][c] = currentPlayer;
+      changePlayerIfGameIsNotOver();
     }
   }
 
