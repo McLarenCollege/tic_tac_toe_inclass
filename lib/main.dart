@@ -252,10 +252,11 @@ class OneBox extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         alignment: Alignment.center,
-        child: AnimatedOpacity(
-            duration: Duration(milliseconds: 200),
-            opacity: buttonChild == null ? 0.0 : 1.0,
-            child: buttonChild),
+//        child: AnimatedOpacity(
+//            duration: Duration(milliseconds: 200),
+//            opacity: buttonChild == null ? 0.0 : 1.0,
+//            child: buttonChild),
+        child: buttonChild == null? null : DropEffect(child: buttonChild),
         margin: EdgeInsets.all(4),
         decoration: BoxDecoration(
           color: backgroundColor,
@@ -264,6 +265,43 @@ class OneBox extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class DropEffect extends StatefulWidget {
+
+  Widget child;
+
+  DropEffect({this.child});
+
+  @override
+  _DropEffectState createState() => _DropEffectState();
+}
+
+class _DropEffectState extends State<DropEffect> with SingleTickerProviderStateMixin {
+  AnimationController _controller;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 600));
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ScaleTransition(scale: Tween(begin: 1.5, end: 1.0).animate(
+        CurvedAnimation(parent: _controller, curve: Curves.bounceOut)),
+      child: FadeTransition(opacity: _controller,
+          child: widget.child),
     );
   }
 }
