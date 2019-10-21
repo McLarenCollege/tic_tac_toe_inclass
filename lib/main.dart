@@ -155,18 +155,18 @@ class _TicTacToePageState extends State<TicTacToePage> {
   }
 
   Widget createStatusWidget() {
-    Text text = Text(
-                getCurrentStatus(),
-                style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.white.withOpacity(0.6),
-                    fontFamily: 'Quicksand'),
-              );
+    TextStyle style = TextStyle(
+        fontSize: 25,
+        color: Colors.white.withOpacity(0.6),
+        fontFamily: 'Quicksand');
     if (winnerCheck(board)) {
-      return BouncingText(text);
+      return BouncingText(getCurrentStatus(), style: style, endColor: createColorFromBool(true));
     }
     else {
-      return text;
+      return Text(
+        getCurrentStatus(),
+        style: style
+      );
     }
   }
 
@@ -195,9 +195,11 @@ class _TicTacToePageState extends State<TicTacToePage> {
 
 class BouncingText extends StatefulWidget {
 
-  final Text text;
+  final String text;
+  final TextStyle style;
+  final Color endColor;
 
-  BouncingText(this.text);
+  BouncingText(this.text, {this.style, this.endColor});
 
   @override
   _BouncingTextState createState() => _BouncingTextState();
@@ -212,15 +214,8 @@ class _BouncingTextState extends State<BouncingText> with SingleTickerProviderSt
     super.initState();
     _controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _controller.reverse();
-      }
-      else if (status == AnimationStatus.dismissed){
-        _controller.forward();
-      }
-    });
-    _controller.forward();
+    _controller.repeat(reverse: true);
+    _controller.addListener(()=>setState((){}));
   }
 
   @override
@@ -231,8 +226,12 @@ class _BouncingTextState extends State<BouncingText> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    return ScaleTransition(child: widget.text, alignment: Alignment.topCenter,
-      scale: Tween(begin: 1.0, end: 1.4).animate(CurvedAnimation(parent: _controller, curve:Curves.easeInOut)),);
+    Animation curvedAnim = CurvedAnimation(parent: _controller, curve:Curves.easeInOut);
+    TextStyle style = widget.style.copyWith(color: ColorTween(begin: widget.style.color, end: widget.endColor).transform(curvedAnim.value));
+    return Transform.scale(scale: Tween(begin: 1.0, end: 1.4).transform(curvedAnim.value),
+      child: Text(widget.text, style:style),);
+//    return ScaleTransition(child: widget.text, alignment: Alignment.topCenter,
+//      scale: Tween(begin: 1.0, end: 1.4).animate(CurvedAnimation(parent: _controller, curve:Curves.easeInOut)),);
   }
 }
 
