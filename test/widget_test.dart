@@ -55,6 +55,47 @@ void main() {
 
 
 
+  test('Test currentStatus', ()
+  {
+    board = [
+      [Token.x, Token.x, Token.o],
+      [Token.o, Token.x, Token.x],
+      [Token.x, Token.o, Token.x]
+    ];
+    currentPlayer = Token.x;
+    expect(getCurrentStatus(), 'Player X wins!');
+
+
+    board = [
+      [Token.x, Token.x, Token.o],
+      [Token.o, Token.x, Token.o],
+      [Token.x, Token.o, Token.o]
+    ];
+    currentPlayer = Token.o;
+    expect(getCurrentStatus(), 'Player O wins!');
+
+
+    board = [
+      [Token.x, Token.x, Token.o],
+      [Token.o, Token.x, Token.x],
+      [Token.x, Token.o, Token.o]
+    ];
+    currentPlayer = Token.o;
+    expect(getCurrentStatus(), 'Draw');
+
+
+    board = [
+      [Token.x, Token.x, null],
+      [Token.o, Token.x, Token.o],
+      [Token.x, Token.o, Token.o]
+    ];
+    currentPlayer = Token.x;
+    expect(getCurrentStatus(), 'Player X to move');
+
+//    changePlayerIfGameIsNotOver();
+  });
+
+
 }
 
 
