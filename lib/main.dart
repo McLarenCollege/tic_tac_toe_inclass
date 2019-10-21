@@ -194,20 +194,20 @@ class OneBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      child: FlatButton(
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        alignment: Alignment.center,
         child: AnimatedOpacity(
-            duration: Duration(milliseconds: 600),
+            duration: Duration(milliseconds: 200),
             opacity: buttonChild == null ? 0.0 : 1.0,
             child: buttonChild),
-        onPressed: onPressed,
-      ),
-      margin: EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.all(
-          Radius.circular(14),
+        margin: EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(14),
+          ),
         ),
       ),
     );
